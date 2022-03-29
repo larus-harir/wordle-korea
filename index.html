@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/hangul-js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        var valCon = [
+            "가난", "가능", "가뭄", "가상", "가입", "가정", "가축", "각자", "간호", "감소", "강사", "강조", "개강", "개발", "개방", "개선", "개성", "개최", "거절", "거짓", "거품", "건너", "건조", "걸레", "검사", "격려", "경고", "경비", "경우", "경제", "계산", "계속", "계약", "계좌", "계층", "고객", "고궁", "고급", "고민", "고백", "고생", "고속",
+            "고집", "고층", "고통", "골치", "공사", "공주", "공포", "공해", "과로", "과제", "교외", "교육", "구멍", "구별", "구분", "구성", "구인", "구입", "국가", "군대", "그늘", "그룹", "근무", "글씨", "글자", "금지", "기념", "기능", "기둥", "기록", "기본", "기쁨", "기술", "기억", "기업", "기운", "기준", "기혼", "기회", "길가", "길이", "깊이",
+            "꼴찌", "나물", "낙서", "난로", "날개", "남부", "낭비", "내복", "냇가", "노동", "노력", "노선", "노인", "놀이", "농부", "농사", "높이", "눈치", "다행", "단계", "단체", "대량", "대문", "대신", "대접", "대중", "대책", "대출", "대형", "댄스", "더위", "도난", "도둑", "도장", "도전", "도중", "동료", "동부", "동시", "두통", "드림", "램프",
+            "레몬", "렌즈", "로봇", "리듬", "마감", "마당", "마술", "마약", "마을", "마중", "막내", "막차", "말투", "맏이", "매력", "매연", "매점", "매진", "먹이", "먼지", "메일", "명사", "명소", "모델", "모습", "모음", "모집", "모형", "목사", "목표", "무늬", "무덤", "무선", "무인", "문구", "문서", "문자", "물가", "미역", "미인", "미팅", "미혼",
+            "민요", "바깥", "바늘", "바닥", "바둑", "바위", "바탕", "박사", "박스", "반대", "발레", "밤새", "방해", "배경", "배꼽", "배낭", "버릇", "버섯", "버튼", "벨트", "벼락", "변기", "변비", "보람", "보름", "보물", "보약", "보충", "보험", "복도", "복사", "봉사", "부담", "부분", "부상", "부장", "부족", "분리", "불교", "뷔페", "비닐", "비만",
+            "비용", "사건", "사막", "사망", "사슴", "사실", "사업", "사정", "사회", "상가", "상대", "상추", "상태", "상표", "서랍", "서론", "서명", "서빙", "석사", "석유", "선배", "설사", "세금", "세련", "세상", "소감", "소년", "소득", "소망", "소문", "소용", "소음", "소화", "속도", "손자", "솜씨", "수단", "수량", "수면", "수명", "수상", "수선",
+            "수입", "수정", "수준", "수집", "수출", "수학", "숙소", "숫자", "스님", "습기", "습도", "승리", "승차 ", "시각", "시력", "시인", "시집", "시합", "식구", "식비", "식초", "식후", "신고", "신체", "신호", "실내", "실시", "실제", "실크", "실패", "싸움", "씨름", "아동", "아픔", "악수", "안개", "안부", "안주", "애인", "애정",
+            "액자", "야간", "야경", "야근", "야외", "양보", "어학", "어휘", "언어", "업무", "엠티", "여럿", "여성", "연구", "연기", "연도", "연하", "연수", "연애", "연주", "예금", "예방", "예상", "예술", "예습", "예의", "예전", "예절", "예정", "예측", "오락", "오염", "온도", "외가", "외모", "요약", "요청", "용기", "용서", "우물", "우승", "우연",
+            "우정", "우편", "울보", "위로", "유명", "육아", "은혜", "음료", "음주", "의류", "의무", "의지", "이동", "이민", "이별", "이불", "이상", "이성", "이외", "이웃", "이익", "이전", "이혼", "인류", "일기", "일부", "일시", "임시", "입시", "자격", "자동", "자랑", "자막", "자살", "자식", "자신", "자음", "자취", "작가", "작사", "잔디", "잡채",
+            "장가", "장녀", "장래", "장사", "장애", "재산", "재학", "재혼", "저금", "저울", "저장", "저축", "전구", "전기", "전부", "전세", "전시", "전자", "전체", "접수", "접시", "정부", "정지", "정차", "정체", "정치", "제공", "제안", "제작", "제출", "제품", "제한", "조건", "조깅", "조림", "조명", "조상", "조심", "조절", "종교", "좌우", "주름",
+            "주먹", "주민", "주방", "주의", "주장", "주택", "중고", "중부", "증가", "지붕", "지식", "지역", "지옥", "지위", "지점", "지진", "지출", "직후", "진짜", "질서", "질투", "집세", "짜증", "짝수", "참가", "참고", "참여", "참치", "창피", "채널", "채식", "채용", "채팅", "처방", "천사", "천재", "체격", "체온", "체육", "체중", "체험", "초급",
+            "최대", "최저", "최초", "최후", "추위", "추천", "추첨", "추측", "충고", "카펫", "캠프", "커튼", "커플", "퀴즈", "타입", "태양", "택배", "텐트", "토론", "통계", "트럭", "특기", "티켓", "파일", "파전", "판매", "팩스", "편리", "평가", "평소", "폭우", "폭포", "폴더", "표정", "풀이", "필수", "핑계", "하품", "학비", "학자", "한우", "한지",
+            "할부", "해결", "해물", "향기", "향수", "허락", "현대", "형태", "혜택", "호감", "호칭", "홀수", "홍보", "홍수", "화재", "화해", "회비", "효과", "후문", "후반", "후식", "후회", "휴식", "휴학", "흥미"
+        ]
+
+        var val = Hangul.disassemble(valCon[Math.floor(Math.random() * valCon.length)]);
+        var con = [0, 0, 0, 0, 0];
+        var sum = 0;
+
+        $(function() {
+            function insertFunc() {
+                var input = document.querySelectorAll('.input'); // 정답과 비교하기 위해 input값을 가져온 것
+
+                for (var i = 0; i < 5; i++) {
+                    if ((input[i].value == "") || (input[i].value == null)) { // 공백이 있으면 실행 불가
+                        alert('공백이 있습니다');
+                        return;
+                    }
+                }
+
+                for (var i = 0; i < 5; i++) {
+                    if (input[i].value == val[i]) {
+                        $(input[i]).css({
+                            background: "rgb(122, 190, 130)"
+                        })
+                        con[i] = 1; // 자리마다 1을 올려 5가 되면 정답처리
+                    } else if (val.includes(input[i].value)) {
+                        $(input[i]).css({
+                            background: "rgb(255, 185, 107)"
+                        })
+                    } else {
+                        $(input[i]).css({
+                            background: "rgb(211, 211, 211)"
+                        })
+                    }
+                    input[i].classList.remove('input'); // input 클래스를 삭제하고 다른 input을 생성하기 위함
+                }
+
+                var moreInsert = `
+                <div>
+                    <input class="input" type='text' maxlength='1'>
+                    <input class="input" type='text' maxlength='1'>
+                    <input class="input" type='text' maxlength='1'>
+                    <input class="input" type='text' maxlength='1'>
+                    <input class="input" type='text' maxlength='1'>
+                </div>
+                <br>
+                ` // 오답시 추가할 input 틀
+
+                for (var i = 0; i < 5; i++) { // con이 총합 5가 되는지 확인
+                    sum += con[i];
+                }
+
+                if (sum == 5) { // 5일시 정답
+                    alert('정답 : ' + Hangul.assemble(val));
+                } else { // 아닐시 새로운 input생성 후 sum값 초기화
+                    document.querySelector('.playzone').insertAdjacentHTML('beforeend', moreInsert);
+                    sum = 0;
+                    return;
+                }
+            }
+
+            $('.insert').click(function() {
+                insertFunc();
+            })
+
+            $("html").keypress(function(event) {
+                if (event.keyCode == 13) {
+                    insertFunc();
+                }
+            })
+
+        })
+    </script>
+    <style>
+        @font-face {
+            font-family: 'HangeulNuri-Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        input {
+            width: 80px;
+            height: 80px;
+            font-size: 60px;
+            line-height: 80px;
+            text-align: center;
+            border: black 1px solid;
+        }
+        
+        body {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+        
+        .insert {
+            width: 150px;
+            height: 80px;
+            font-size: 30px;
+            background-color: rgb(255, 127, 80);
+            border: solid 1px black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <h1>Wordle - 워들</h1>
+        <p>한글 단어 맞추기</p>
+        <hr>
+
+        <div class="playzone">
+            <div class="start">
+                <input class="input" type='text' maxlength='1'>
+                <input class="input" type='text' maxlength='1'>
+                <input class="input" type='text' maxlength='1'>
+                <input class="input" type='text' maxlength='1'>
+                <input class="input" type='text' maxlength='1'>
+            </div>
+            <br>
+        </div>
+
+        <div class="keyBoard">
+        </div>
+
+    </main>
+
+    <button class="insert">제출</button>
+
+</body>
+
+</html>
